@@ -4,6 +4,7 @@ using Prism.Navigation;
 using Prism.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
@@ -36,7 +37,8 @@ namespace OrlandoDemo.ViewModels
         {
             Title = "Main Page";
             Name = string.Empty;
-            ShowLaunchPage = new DelegateCommand(async () =>
+
+           ShowLaunchPage = new DelegateCommand(async () =>
             {
                 await navigationService.NavigateAsync("LaunchSchedulePage");
             });
