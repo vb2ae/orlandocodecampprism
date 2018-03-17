@@ -103,14 +103,11 @@ namespace OrlandoDemo.Models
         [JsonProperty("master-image")]
         public MasterImage MasterImage { get; set; }
 
+        [JsonProperty("date-format")]
+        public string[] DateFormat { get; set; }
+
         [JsonProperty("is-all-day")]
         public bool? IsAllDay { get; set; }
-
-        [JsonProperty("date-format")]
-        public DateFormat[] DateFormat { get; set; }
-
-
-
     }
 
     public partial class AdditionalLink1
@@ -181,8 +178,6 @@ namespace OrlandoDemo.Models
     public enum Title { FullDetails };
 
     public enum CalendarName { The6089, The6090 };
-
-    public enum DateFormat { The6155, The6156, The6158 };
 
     public enum DateType { Date };
 
@@ -283,38 +278,6 @@ namespace OrlandoDemo.Models
             {
                 case CalendarName.The6089: serializer.Serialize(writer, "6089"); break;
                 case CalendarName.The6090: serializer.Serialize(writer, "6090"); break;
-            }
-        }
-    }
-
-    static class DateFormatExtensions
-    {
-        public static DateFormat? ValueForString(string str)
-        {
-            switch (str)
-            {
-                case "6155": return DateFormat.The6155;
-                case "6156": return DateFormat.The6156;
-                case "6158": return DateFormat.The6158;
-                default: return null;
-            }
-        }
-
-        public static DateFormat ReadJson(JsonReader reader, JsonSerializer serializer)
-        {
-            var str = serializer.Deserialize<string>(reader);
-            var maybeValue = ValueForString(str);
-            if (maybeValue.HasValue) return maybeValue.Value;
-            throw new Exception("Unknown enum case " + str);
-        }
-
-        public static void WriteJson(this DateFormat value, JsonWriter writer, JsonSerializer serializer)
-        {
-            switch (value)
-            {
-                case DateFormat.The6155: serializer.Serialize(writer, "6155"); break;
-                case DateFormat.The6156: serializer.Serialize(writer, "6156"); break;
-                case DateFormat.The6158: serializer.Serialize(writer, "6158"); break;
             }
         }
     }
@@ -494,7 +457,7 @@ namespace OrlandoDemo.Models
 
     internal class Converter : JsonConverter
     {
-        public override bool CanConvert(Type t) => t == typeof(Index) || t == typeof(Title) || t == typeof(CalendarName) || t == typeof(DateFormat) || t == typeof(DateType) || t == typeof(Timezone) || t == typeof(TimezoneDb) || t == typeof(Name) || t == typeof(SourceType) || t == typeof(HitType) || t == typeof(Index?) || t == typeof(Title?) || t == typeof(CalendarName?) || t == typeof(DateFormat?) || t == typeof(DateType?) || t == typeof(Timezone?) || t == typeof(TimezoneDb?) || t == typeof(Name?) || t == typeof(SourceType?) || t == typeof(HitType?);
+        public override bool CanConvert(Type t) => t == typeof(Index) || t == typeof(Title) || t == typeof(CalendarName) || t == typeof(DateType) || t == typeof(Timezone) || t == typeof(TimezoneDb) || t == typeof(Name) || t == typeof(SourceType) || t == typeof(HitType) || t == typeof(Index?) || t == typeof(Title?) || t == typeof(CalendarName?) || t == typeof(DateType?) || t == typeof(Timezone?) || t == typeof(TimezoneDb?) || t == typeof(Name?) || t == typeof(SourceType?) || t == typeof(HitType?);
 
         public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
         {
@@ -504,8 +467,6 @@ namespace OrlandoDemo.Models
                 return TitleExtensions.ReadJson(reader, serializer);
             if (t == typeof(CalendarName))
                 return CalendarNameExtensions.ReadJson(reader, serializer);
-            if (t == typeof(DateFormat))
-                return DateFormatExtensions.ReadJson(reader, serializer);
             if (t == typeof(DateType))
                 return DateTypeExtensions.ReadJson(reader, serializer);
             if (t == typeof(Timezone))
@@ -532,11 +493,6 @@ namespace OrlandoDemo.Models
             {
                 if (reader.TokenType == JsonToken.Null) return null;
                 return CalendarNameExtensions.ReadJson(reader, serializer);
-            }
-            if (t == typeof(DateFormat?))
-            {
-                if (reader.TokenType == JsonToken.Null) return null;
-                return DateFormatExtensions.ReadJson(reader, serializer);
             }
             if (t == typeof(DateType?))
             {
@@ -587,11 +543,6 @@ namespace OrlandoDemo.Models
             if (t == typeof(CalendarName))
             {
                 ((CalendarName)value).WriteJson(writer, serializer);
-                return;
-            }
-            if (t == typeof(DateFormat))
-            {
-                ((DateFormat)value).WriteJson(writer, serializer);
                 return;
             }
             if (t == typeof(DateType))
