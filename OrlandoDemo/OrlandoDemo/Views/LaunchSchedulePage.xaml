@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="OrlandoDemo.Views.LaunchSchedulePage"
+             Title="{Binding Title}">
+    <ContentPage.Content>
+        <ListView ItemsSource="{Binding Launches}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Padding="10,10,10,10"  VerticalOptions="StartAndExpand">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="75"></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="80"/>
+                            </Grid.RowDefinitions>
+                            <Image Source="{Binding ImageUri}" ></Image>
+                            <StackLayout Grid.Column="1">
+                                    <Label Text="{Binding LaunchDate}" HorizontalOptions="FillAndExpand" ></Label>
+                            </StackLayout>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>>
+        </ListView>
+    </ContentPage.Content>
+</ContentPage>
