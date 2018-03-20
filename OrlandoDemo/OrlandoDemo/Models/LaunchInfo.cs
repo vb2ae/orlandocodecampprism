@@ -12,6 +12,8 @@ namespace OrlandoDemo.Models
             public string ImageUri { get; set; }
 
             public DateTime LaunchDate { get; set; }
-        }
+
+            public string Location { get; set; }
+     }
 
 }
